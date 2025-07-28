@@ -1,6 +1,481 @@
+{% doc %}
+  @prompt
+    I would like for a compelling hero section where there is a box for words on the left that overlaps a larger box with pictures that revolve, I need the images to fit in the boxes, also please make it so there is not circles on the bottom, i would like for the images to cover the majority of the section, great now I would like for each image to have a button, also please make it so the images fit in the box not cover, great give me the option to adjust the sizes of the image, ok lets make it so the images arent in a  box, go back to how it was before that last message, Ok lets change this section so that there is an image on the left and right that fit but cover the entire section, have there be words in the middle and two buttons below one on left and one on right, So i want the images to be touching each other in the center make them go the whole width and height of the section, I would like for the words to be on top of the images in the center of both of them along with the buttons
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-hero-section-{{ ai_gen_id }} {
+    position: relative;
+    min-height: {{ block.settings.section_height }}px;
+    display: flex;
+    align-items: center;
+    background-color: {{ block.settings.background_color }};
+    overflow: hidden;
+  }
+
+  .ai-hero-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    height: {{ block.settings.section_height }}px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .ai-hero-image-left-{{ ai_gen_id }} {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .ai-hero-image-right-{{ ai_gen_id }} {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .ai-hero-image-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;object-position: center;
+  }
+
+  .ai-hero-image-placeholder-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-hero-image-placeholder-{{ ai_gen_id }} svg {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+  }
+
+  .ai-hero-content-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    padding: {{ block.settings.content_padding }}px;
+    background-color: {{ block.settings.content_background }};
+    border-radius: {{ block.settings.content_border_radius }}px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, {{ block.settings.content_shadow_opacity | divided_by: 100.0 }});
+    max-width: {{ block.settings.content_max_width }}px;
+    width: 90%;
+  }
+
+  .ai-hero-heading-{{ ai_gen_id }} {
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_size }}px;
+    line-height: 1.2;
+    margin: 0 0 16px 0;
+    font-weight:700;
+  }
+
+  .ai-hero-subtext-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.text_size }}px;
+    line-height: 1.5;
+    margin: 0 0 32px 0;
+  }
+
+  .ai-hero-buttons-{{ ai_gen_id }} {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ai-hero-button-left-{{ ai_gen_id }} {
+    display: inline-block;
+    padding:16px 24px;
+    background-color: {{ block.settings.left_button_background }};
+    color: {{ block.settings.left_button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;font-size: {{ block.settings.button_text_size }}px;
+  }
+
+  .ai-hero-button-left-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.left_button_hover_background }};
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-hero-button-right-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 16px 24px;
+    background-color: {{ block.settings.right_button_background }};
+    color: {{ block.settings.right_button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+    font-size: {{ block.settings.button_text_size }}px;
+  }
+
+  .ai-hero-button-right-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.right_button_hover_background }};
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-hero-container-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      height: {{ block.settings.section_height }}px;
+    }
+
+    .ai-hero-content-{{ ai_gen_id }} {
+      max-width: none;
+      width: 85%;
+      padding: {{ block.settings.content_padding | times: 0.8 }}px;
+    }
+
+    .ai-hero-buttons-{{ ai_gen_id }} {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ai-hero-button-left-{{ ai_gen_id }},
+    .ai-hero-button-right-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-hero-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.8 }}px;
+    }
+
+    .ai-hero-subtext-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 }}px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .ai-hero-content-{{ ai_gen_id }} {
+      width: 90%;
+      padding: {{ block.settings.content_padding | times: 0.6 }}px;
+    }
+
+    .ai-hero-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.6 }}px;
+    }
+  }
+{% endstyle %}
+
+<div
+  class="ai-hero-section-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-hero-container-{{ ai_gen_id }}">
+    <div class="ai-hero-image-left-{{ ai_gen_id }}">
+      {% if block.settings.left_image %}
+        <img
+          src="{{ block.settings.left_image | image_url: width: 1200}}"
+          alt="{{ block.settings.left_image.alt | escape }}"
+          class="ai-hero-image-{{ ai_gen_id }}"
+          loading="lazy"width="1200"
+          height="800"
+        >
+      {% else %}
+        <div class="ai-hero-image-placeholder-{{ ai_gen_id }}">
+          {{ 'hero-apparel-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="ai-hero-image-right-{{ ai_gen_id }}">
+      {% if block.settings.right_image %}
+        <img
+          src="{{ block.settings.right_image | image_url: width: 1200 }}"
+          alt="{{ block.settings.right_image.alt | escape }}"
+          class="ai-hero-image-{{ ai_gen_id }}"
+          loading="lazy"
+          width="1200"
+          height="800"
+        >
+      {% else %}
+        <div class="ai-hero-image-placeholder-{{ ai_gen_id }}">
+          {{ 'hero-apparel-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="ai-hero-content-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h1 class="ai-hero-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h1>
+      {% endif %}
+      {% if block.settings.subtext != blank %}
+        <div class="ai-hero-subtext-{{ ai_gen_id }}">{{ block.settings.subtext }}</div>
+      {% endif %}
+
+      <div class="ai-hero-buttons-{{ ai_gen_id }}">
+        {% if block.settings.left_button_text != blank %}
+          <a href="{{ block.settings.left_button_link | default: '#' }}" class="ai-hero-button-left-{{ ai_gen_id }}">
+            {{ block.settings.left_button_text }}
+          </a>
+        {% endif %}
+
+        {% if block.settings.right_button_text != blank %}
+          <a href="{{ block.settings.right_button_link | default: '#' }}" class="ai-hero-button-right-{{ ai_gen_id }}">
+            {{ block.settings.right_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Split Hero Section",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Amazing Products"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Experience the perfect blend of style and functionality with our curated collection."
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left image"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right image"
+    },
+    {
+      "type": "header",
+      "content": "Left Button"
+    },
+    {
+      "type": "text",
+      "id": "left_button_text",
+      "label": "Left button text",
+      "default": "Shop Collection"
+    },
+    {
+      "type": "url",
+      "id": "left_button_link",
+      "label": "Left button link"
+    },
+    {
+      "type": "color",
+      "id": "left_button_background",
+      "label": "Left button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "left_button_text_color",
+      "label": "Left button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "left_button_hover_background",
+      "label": "Left button hover background",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Right Button"
+    },
+    {
+      "type": "text",
+      "id": "right_button_text",
+      "label": "Right button text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "right_button_link",
+      "label": "Right button link"
+    },
+    {
+      "type": "color",
+      "id": "right_button_background",
+      "label": "Right button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "right_button_text_color",
+      "label": "Right button text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "right_button_hover_background",
+      "label": "Right button hover background",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "min": 400,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "label": "Section height",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "min": 20,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Content padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "min": 300,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Content max width",
+      "default": 500
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#f9f8f6"
+    },
+    {
+      "type": "color",
+      "id": "content_background",
+      "label": "Content background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "content_shadow_opacity",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "unit": "%",
+      "label": "Content shadow opacity",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Border Radius"
+    },
+    {
+      "type": "range",
+      "id": "content_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Content border radius",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split Hero Section"
+    }
+  ]
+}
 {% endschema %}
