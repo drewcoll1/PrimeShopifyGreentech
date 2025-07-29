@@ -257,9 +257,7 @@
           ]
         }
       },
-      "custom_css": [
-        ".collection-image {width: 100%; height: auto; max-width: 200px; max-height: 200px; object-fit: cover;}"
-      ],
+      "custom_css": [],
       "settings": {
         "layout_type": "grid",
         "product_card_size": "medium",
