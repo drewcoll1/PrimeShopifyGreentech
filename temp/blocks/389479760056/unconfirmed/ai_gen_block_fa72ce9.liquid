@@ -1,6 +1,468 @@
+{% doc %}
+  @prompt
+    please make me a custom footer. I want the left side to be a search bar with links to the different pages from the nav, then on the right a place for a logo and link to website and description
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-custom-footer-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    padding: {{ block.settings.padding_top }}px 20px {{ block.settings.padding_bottom }}px;
+  }
+
+  .ai-custom-footer__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .ai-custom-footer__left-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .ai-custom-footer__search-wrapper-{{ ai_gen_id }} {
+    position: relative;
+  }
+
+  .ai-custom-footer__search-form-{{ ai_gen_id }} {
+    display: flex;
+    border: 1px solid {{ block.settings.search_border_color }};
+    border-radius: {{ block.settings.search_border_radius }}px;
+    overflow: hidden;
+  }
+
+  .ai-custom-footer__search-input-{{ ai_gen_id }} {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    background: {{ block.settings.search_background_color }};
+    color: {{ block.settings.search_text_color }};
+    font-size: 14px;
+  }
+
+  .ai-custom-footer__search-input-{{ ai_gen_id }}::placeholder {
+    color: {{ block.settings.search_placeholder_color }};
+  }
+
+  .ai-custom-footer__search-input-{{ ai_gen_id }}:focus {
+    outline: none;
+  }
+
+  .ai-custom-footer__search-button-{{ ai_gen_id }} {
+    padding: 12px 16px;
+    background: {{ block.settings.search_button_color }};
+    color: {{ block.settings.search_button_text_color }};
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-custom-footer__search-button-{{ ai_gen_id }}:hover {
+    background: {{ block.settings.search_button_hover_color }};
+  }
+
+  .ai-custom-footer__nav-links-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ai-custom-footer__nav-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.nav_title_size }}px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-custom-footer__nav-list-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ai-custom-footer__nav-link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.link_size }}px;
+    transition: color 0.3s ease;
+  }
+
+  .ai-custom-footer__nav-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  .ai-custom-footer__right-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .ai-custom-footer__logo-wrapper-{{ ai_gen_id }} {
+    display: block;
+  }
+
+  .ai-custom-footer__logo-{{ ai_gen_id }} {
+    max-width: {{ block.settings.logo_width }}px;
+    height: auto;}
+
+  .ai-custom-footer__logo-placeholder-{{ ai_gen_id }} {
+    width: {{ block.settings.logo_width }}px;
+    height: 60px;
+    background-color: {{ block.settings.text_color }};
+    border-radius:4px;
+  }
+
+  .ai-custom-footer__logo-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+  }
+
+  .ai-custom-footer__website-link-{{ ai_gen_id }} {
+    color: {{ block.settings.link_color }};
+    text-decoration: none;
+    font-size: {{ block.settings.link_size }}px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .ai-custom-footer__website-link-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  .ai-custom-footer__description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    line-height: 1.5;
+    color: {{ block.settings.text_color }};
+    opacity: 0.8;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-custom-footer__container-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .ai-custom-footer__right-{{ ai_gen_id }} {
+      order: -1;
+      align-items: center;
+      text-align: center;
+    }
+
+    .ai-custom-footer__nav-list-{{ ai_gen_id }} {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px 24px;
+    }
+  }
+{% endstyle %}
+
+<footer class="ai-custom-footer-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-custom-footer__container-{{ ai_gen_id }}">
+    <div class="ai-custom-footer__left-{{ ai_gen_id }}">
+      <div class="ai-custom-footer__search-wrapper-{{ ai_gen_id }}">
+        <form action="{{ routes.search_url }}" method="get" class="ai-custom-footer__search-form-{{ ai_gen_id }}">
+          <input
+            type="search"
+            name="q"
+            class="ai-custom-footer__search-input-{{ ai_gen_id }}"
+            placeholder="{{ block.settings.search_placeholder }}"
+            value="{{ search.terms | escape }}"
+          >
+          <button type="submit" class="ai-custom-footer__search-button-{{ ai_gen_id }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="ai-custom-footer__nav-links-{{ ai_gen_id }}">
+        {% if block.settings.nav_title != blank %}
+          <h3 class="ai-custom-footer__nav-title-{{ ai_gen_id }}">{{ block.settings.nav_title }}</h3>
+        {% endif %}
+        <ul class="ai-custom-footer__nav-list-{{ ai_gen_id }}">
+          {% for link in linklists[block.settings.menu].links %}
+            <li>
+              <a href="{{ link.url }}" class="ai-custom-footer__nav-link-{{ ai_gen_id }}">
+                {{ link.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="ai-custom-footer__right-{{ ai_gen_id }}">
+      {% if block.settings.website_url != blank %}
+        <a href="{{ block.settings.website_url }}" class="ai-custom-footer__logo-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.logo %}
+            <img
+              src="{{ block.settings.logo | image_url: width: 400 }}"
+              alt="{{ block.settings.logo.alt | default: shop.name | escape }}"
+              class="ai-custom-footer__logo-{{ ai_gen_id }}"
+              width="{{ block.settings.logo.width }}"
+              height="{{ block.settings.logo.height }}"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="ai-custom-footer__logo-placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </a>
+      {% else %}
+        <div class="ai-custom-footer__logo-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.logo %}
+            <img
+              src="{{ block.settings.logo | image_url: width: 400 }}"
+              alt="{{ block.settings.logo.alt | default: shop.name | escape }}"
+              class="ai-custom-footer__logo-{{ ai_gen_id }}"
+              width="{{ block.settings.logo.width }}"
+              height="{{ block.settings.logo.height }}"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="ai-custom-footer__logo-placeholder-{{ ai_gen_id }}">
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if block.settings.website_url != blank and block.settings.website_text != blank %}
+        <a href="{{ block.settings.website_url }}" class="ai-custom-footer__website-link-{{ ai_gen_id }}">
+          {{ block.settings.website_text }}
+        </a>
+      {% endif %}
+
+      {% if block.settings.description != blank %}
+        <div class="ai-custom-footer__description-{{ ai_gen_id }}">
+          {{ block.settings.description }}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Custom Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Search Bar"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder text",
+      "default": "Search products..."
+    },
+    {
+      "type": "color",
+      "id": "search_background_color",
+      "label": "Search background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "search_text_color",
+      "label": "Search text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "search_placeholder_color",
+      "label": "Search placeholder color",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "search_border_color",
+      "label": "Search border color",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "color",
+      "id": "search_button_color",
+      "label": "Search button color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "search_button_text_color",
+      "label": "Search button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "search_button_hover_color",
+      "label": "Search button hover color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "search_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Search border radius",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Navigation Links"
+    },
+    {
+      "type": "text",
+      "id": "nav_title",
+      "label": "Navigation title",
+      "default": "Quick Links"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "range",
+      "id": "nav_title_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Navigation title size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Link text size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Logo & Website"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 150
+    },
+    {
+      "type": "url",
+      "id": "website_url",
+      "label": "Website URL"
+    },
+    {
+      "type": "text",
+      "id": "website_text",
+      "label": "Website link text",
+      "default": "Visit our website"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Your trusted partner for quality products and exceptional service."
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "label": "Description text size",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Footer"
+    }
+  ]
+}
 {% endschema %}
