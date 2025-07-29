@@ -29,7 +29,7 @@
             "text": "Going Beyond Supply",
             "text_vertical_position": -10,
             "button_text_1": "Men's Apparel",
-            "button_link_1": "",
+            "button_link_1": "shopify://collections/mens-apparel",
             "button_text_2": "Women's Apparel",
             "button_link_2": "",
             "button_vertical_position": 80,
