@@ -55,6 +55,7 @@
         "text_tqQTNE",
         "divider_hxzt8A"
       ],
+      "custom_css": [],
       "name": "Collection Header",
       "settings": {
         "content_direction": "column",
@@ -130,7 +131,7 @@
             "card-gallery": {
               "type": "_product-card-gallery",
               "settings": {
-                "image_ratio": "adapt",
+                "image_ratio": "portrait",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -256,10 +257,13 @@
           ]
         }
       },
+      "custom_css": [
+        ".collection-image {width: 100%; height: auto; max-width: 200px; max-height: 200px; object-fit: cover;}"
+      ],
       "settings": {
         "layout_type": "grid",
         "product_card_size": "medium",
-        "mobile_product_card_size": "large",
+        "mobile_product_card_size": "small",
         "product_grid_width": "centered",
         "full_width_on_mobile": true,
         "columns_gap_horizontal": 16,
