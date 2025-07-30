@@ -9,63 +9,59 @@
  */
 {
   "sections": {
-    "section": {
+    "section_zX9gpX": {
       "type": "section",
       "blocks": {
-        "text_tqQTNE": {
-          "type": "text",
-          "name": "Title",
+        "ai_gen_block_79987d1_6mPHUh": {
+          "type": "ai_gen_block_79987d1",
           "settings": {
-            "text": "<h3><strong>Men's Apparel</strong></h3>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-tertiary--family)",
-            "font_size": "var(--font-size--heading-lg)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "divider_hxzt8A": {
-          "type": "_divider",
-          "name": "t:names.divider",
-          "settings": {
-            "thickness": 1,
-            "corner_radius": "square",
-            "width_percent": 100,
-            "padding-block-start": 0,
-            "padding-block-end": 0
+            "section_height": 200,
+            "vertical_alignment": "center",
+            "show_breadcrumb": true,
+            "home_text": "Home",
+            "current_page_text": "Current Page",
+            "breadcrumb_separator": "/",
+            "breadcrumb_separator_spacing": 6,
+            "breadcrumb_color": "#666666",
+            "breadcrumb_link_color": "#000000",
+            "breadcrumb_link_hover_color": "#333333",
+            "breadcrumb_size": 14,
+            "breadcrumb_text_transform": "none",
+            "breadcrumb_bottom_margin": 16,
+            "title": "Men's Apparel",
+            "description": "",
+            "text_alignment": "left",
+            "title_color": "#000000",
+            "title_size": 38,
+            "title_font_weight": "600",
+            "title_text_transform": "none",
+            "title_line_height": 1.2,
+            "title_letter_spacing": 0,
+            "title_bottom_margin": 14,
+            "description_color": "#666666",
+            "description_size": 16,
+            "description_line_height": 1.5,
+            "description_max_width": 600,
+            "background_color": "#ffffff",
+            "padding_top": 60,
+            "padding_bottom": 60
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "text_tqQTNE",
-        "divider_hxzt8A"
+        "ai_gen_block_79987d1_6mPHUh"
       ],
-      "custom_css": [],
-      "name": "Collection Header",
+      "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "flex-start",
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
         "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 80,
+        "gap": 16,
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
@@ -81,7 +77,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 50,
+        "padding-block-start": 0,
         "padding-block-end": 0
       }
     },
@@ -95,10 +91,10 @@
             "enable_filtering": true,
             "filter_style": "horizontal",
             "filter_width": "centered",
-            "text_label_case": "uppercase",
+            "text_label_case": "default",
             "show_swatch_label": false,
             "show_filter_label": false,
-            "enable_sorting": true,
+            "enable_sorting": false,
             "enable_grid_density": true,
             "inherit_color_scheme": true,
             "color_scheme": "",
@@ -275,7 +271,7 @@
     }
   },
   "order": [
-    "section",
+    "section_zX9gpX",
     "main"
   ]
 }
