@@ -32,7 +32,7 @@
             "button_link_1": "shopify://collections/mens-apparel",
             "button_text_2": "Women's Apparel",
             "button_link_2": "",
-            "button_vertical_position": 210,
+            "button_vertical_position": 0,
             "overlay_color": "#000000",
             "overlay_opacity": 0,
             "text_color": "#228b22",
@@ -48,7 +48,7 @@
             "button_text_size": 14,
             "button_font_weight": "700",
             "button_italic": false,
-            "button_border_radius": 0
+            "button_border_radius": 2
           },
           "blocks": {}
         }
