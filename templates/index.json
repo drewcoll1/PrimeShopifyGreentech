@@ -138,9 +138,9 @@
             "subtitle_color": "#666666",
             "card_title_size": 20,
             "card_description_size": 14,
-            "nav_button_color": "#ffffff",
+            "nav_button_color": "#000000",
             "nav_button_hover_color": "#f0f0f0",
-            "nav_icon_color": "#000000"
+            "nav_icon_color": "#ffffff"
           },
           "blocks": {}
         }
