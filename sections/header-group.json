@@ -24,7 +24,7 @@
             "padding-block-start": 10,
             "padding-block-end": 10,
             "padding-inline-start": 0,
-            "padding-inline-end": 100
+            "padding-inline-end": 0
           },
           "blocks": {}
         },
@@ -58,7 +58,7 @@
         }
       },
       "settings": {
-        "logo_position": "left",
+        "logo_position": "center",
         "menu_position": "center",
         "menu_row": "bottom",
         "show_search": true,
