@@ -1,6 +1,234 @@
+{% doc %}
+  @prompt
+    I need a collection header with only the breadcrumb in it and option to manipulate the size and boldness, I need the words larger, also the option to adjust section height, the entire section adjust height not just the breadcrumb
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-header-{{ ai_gen_id }} {
+    background-color: {{ block.settings.background_color }};
+    height: {{ block.settings.section_height }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-collection-header__container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+  }
+
+  .ai-collection-header__breadcrumb-{{ ai_gen_id }} {
+    font-size: {{ block.settings.breadcrumb_size }}px;
+    font-weight: {{ block.settings.breadcrumb_weight }};
+    color: {{ block.settings.breadcrumb_color }};
+    line-height: 1.4;
+  }
+
+  .ai-collection-header__breadcrumb-{{ ai_gen_id }} a {
+    color: {{ block.settings.breadcrumb_link_color }};
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .ai-collection-header__breadcrumb-{{ ai_gen_id }} a:hover {
+    color: {{ block.settings.breadcrumb_link_hover_color }};
+    text-decoration: underline;
+  }
+
+  .ai-collection-header__breadcrumb-separator-{{ ai_gen_id }} {
+    margin: 0 8px;
+    color: {{ block.settings.breadcrumb_separator_color }};
+  }
+
+  .ai-collection-header__breadcrumb-current-{{ ai_gen_id }} {
+    color: {{ block.settings.breadcrumb_current_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-header__container-{{ ai_gen_id }} {
+      padding: 0 16px;
+    }
+
+    .ai-collection-header__breadcrumb-{{ ai_gen_id }} {
+      font-size: {{ block.settings.breadcrumb_size | times: 0.9 }}px;
+    }
+
+    .ai-collection-header-{{ ai_gen_id }} {
+      height: {{ block.settings.section_height | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-collection-header-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collection-header__container-{{ ai_gen_id }}">
+    <nav class="ai-collection-header__breadcrumb-{{ ai_gen_id }}" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">{{ block.settings.home_text }}</a>
+      
+      {% if collection %}
+        <span class="ai-collection-header__breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator_symbol }}</span>
+        <span class="ai-collection-header__breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ collection.title }}</span>
+      {% elsif blog %}
+        <span class="ai-collection-header__breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator_symbol }}</span>
+        <span class="ai-collection-header__breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ blog.title }}</span>
+      {% elsif page %}
+        <span class="ai-collection-header__breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator_symbol }}</span>
+        <span class="ai-collection-header__breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ page.title }}</span>
+      {% elsif product %}
+        {% if product.collections.size > 0 %}
+          <span class="ai-collection-header__breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator_symbol }}</span><a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+          <span class="ai-collection-header__breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator_symbol }}</span>
+        {% else %}
+          <span class="ai-collection-header__breadcrumb-separator-{{ ai_gen_id }}" aria-hidden="true">{{ block.settings.separator_symbol }}</span>
+        {% endif %}
+        <span class="ai-collection-header__breadcrumb-current-{{ ai_gen_id }}" aria-current="page">{{ product.title }}</span>
+      {% endif %}
+    </nav>
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Collection Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "home_text",
+      "label": "Home text",
+      "default": "Home"
+    },
+    {
+      "type": "select",
+      "id": "separator_symbol",
+      "label": "Separator symbol",
+      "options": [
+        {
+          "value": "/",
+          "label": "/"
+        },
+        {
+          "value": ">",
+          "label": ">"
+        },
+        {
+          "value": "→",
+          "label": "→"
+        },
+        {
+          "value": "•",
+          "label": "•"
+        }
+      ],
+      "default": "/"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "min": 50,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Section height",
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "breadcrumb_size",
+      "min": 14,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Font size",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "breadcrumb_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_link_color",
+      "label": "Link color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_link_hover_color",
+      "label": "Link hover color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_current_color",
+      "label": "Current page color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_separator_color",
+      "label": "Separator color",
+      "default": "#cccccc"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Header"
+    }
+  ],
+  "tag": null
+}
 {% endschema %}
