@@ -39,7 +39,7 @@
             "link_background": "#000000",
             "link_color": "#ffffff",
             "link_border_color": "#f9f8f6",
-            "link_hover_background": "#333333",
+            "link_hover_background": "#00000047",
             "link_hover_color": "#ffffff",
             "background_color": "#ffffff"
           },
