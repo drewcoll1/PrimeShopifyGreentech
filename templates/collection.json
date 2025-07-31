@@ -44,7 +44,7 @@
             "description_max_width": 600,
             "background_color": "#ffffff",
             "padding_top": 100,
-            "padding_bottom": 32
+            "padding_bottom": 60
           },
           "blocks": {}
         }
