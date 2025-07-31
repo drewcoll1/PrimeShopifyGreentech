@@ -9,29 +9,35 @@
  */
 {
   "sections": {
-    "section_fBY4Yb": {
+    "section_6acMiH": {
       "type": "section",
       "blocks": {
-        "ai_gen_block_a888052_VD7gLm": {
-          "type": "ai_gen_block_a888052",
+        "ai_gen_block_0b275cb_3QM6VL": {
+          "type": "ai_gen_block_0b275cb",
           "settings": {
-            "home_text": "Home",
-            "separator_symbol": "/",
-            "section_height": 50,
-            "breadcrumb_size": 28,
-            "breadcrumb_weight": "500",
+            "section_height": 150,
+            "content_gap": 28,
             "background_color": "#ffffff",
-            "breadcrumb_color": "#000000",
-            "breadcrumb_link_color": "#000000",
-            "breadcrumb_link_hover_color": "#666666",
-            "breadcrumb_current_color": "#666666",
-            "breadcrumb_separator_color": "#cccccc"
+            "breadcrumb_size": 28,
+            "breadcrumb_weight": "400",
+            "show_content": true,
+            "content_text": "",
+            "content_size": 16,
+            "content_weight": "400",
+            "text_color": "#000000",
+            "link_color": "#000000",
+            "link_hover_color": "#666666",
+            "current_page_color": "#666666",
+            "separator_color": "#cccccc",
+            "content_color": "#666666",
+            "home_text": "Home",
+            "separator_text": "/"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_a888052_VD7gLm"
+        "ai_gen_block_0b275cb_3QM6VL"
       ],
       "name": "t:names.custom_section",
       "settings": {
@@ -44,7 +50,7 @@
         "vertical_alignment_flex_direction_column": "center",
         "gap": 12,
         "section_width": "page-width",
-        "section_height": "small",
+        "section_height": "",
         "section_height_custom": 50,
         "color_scheme": "scheme-2",
         "background_media": "none",
@@ -252,7 +258,7 @@
     }
   },
   "order": [
-    "section_fBY4Yb",
+    "section_6acMiH",
     "main"
   ]
 }
