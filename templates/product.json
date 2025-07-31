@@ -360,6 +360,7 @@
                   "blocks": {
                     "accordion_row_WyAjHK": {
                       "type": "_accordion-row",
+                      "disabled": true,
                       "settings": {
                         "heading": "CARE & MAINTENANCE",
                         "open_by_default": false,
