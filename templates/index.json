@@ -282,7 +282,7 @@
             "heading": "Shop by Category",
             "section_padding": 40,
             "horizontal_offset": 220,
-            "grid_gap": 25,
+            "grid_gap": 50,
             "columns_mobile": "1",
             "card_background": "#ffffff",
             "card_border_radius": 8,
