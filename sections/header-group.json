@@ -42,7 +42,7 @@
             "color_scheme": "scheme-2",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
-            "type_font_primary_size": "1.125rem",
+            "type_font_primary_size": "1rem",
             "type_case_primary_link": "uppercase",
             "type_font_secondary_link": "secondary",
             "type_case_secondary_link": "none",
