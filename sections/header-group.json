@@ -24,7 +24,7 @@
             "padding-block-start": 10,
             "padding-block-end": 10,
             "padding-inline-start": 0,
-            "padding-inline-end": 35
+            "padding-inline-end": 30
           },
           "blocks": {}
         },
@@ -42,7 +42,7 @@
             "color_scheme": "scheme-2",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
-            "type_font_primary_size": "0.875rem",
+            "type_font_primary_size": "1.125rem",
             "type_case_primary_link": "uppercase",
             "type_font_secondary_link": "secondary",
             "type_case_secondary_link": "none",
