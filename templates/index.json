@@ -218,7 +218,7 @@
             "image_background_color": "#ffffff",
             "image_border_radius": 8,
             "section_padding": 100,
-            "card_padding": 36,
+            "card_padding": 40,
             "card_border_radius": 12,
             "card_background": "#ffffff",
             "card_border_color": "#e6e6e6",
