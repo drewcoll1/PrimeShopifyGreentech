@@ -281,7 +281,7 @@
           "settings": {
             "heading": "Shop by Category",
             "section_padding": 40,
-            "horizontal_offset": 0,
+            "horizontal_offset": 260,
             "grid_gap": 25,
             "columns_mobile": "1",
             "card_background": "#ffffff",
