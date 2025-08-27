@@ -261,7 +261,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h3>Shop by Collection</h3>",
+                "text": "<h4>Shop by Collection</h4>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
