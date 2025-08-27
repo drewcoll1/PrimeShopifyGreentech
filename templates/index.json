@@ -280,6 +280,7 @@
       "block_order": [
         "ai_gen_block_1796341_PwmDTA"
       ],
+      "disabled": true,
       "name": "t:names.custom_section",
       "settings": {
         "content_direction": "column",
