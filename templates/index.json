@@ -311,8 +311,8 @@
               "settings": {
                 "width": "fit-content",
                 "max_width": "narrow",
-                "alignment": "left",
-                "type_preset": "rte",
+                "alignment": "center",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
