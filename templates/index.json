@@ -261,11 +261,11 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h4>Shop by Collection</h4>",
+                "text": "<h3>SHOP BY COLLECTION</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
-                "type_preset": "rte",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
