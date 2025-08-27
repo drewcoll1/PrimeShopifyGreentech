@@ -1,6 +1,492 @@
+{% doc %}
+  @prompt
+    I need a section to display my collections in cards, it is very important to me that the collections are centered on every media screen width, ok I want a display section for my collections, I want there to be cards for each collection all of them should be on the page, everything needs to be centered on the page, ok good i like this let me pick the images, also lets make it so there is a description below collection name, ok good please have the images contain not fill, there should be white space around the image for the areas it does not cover, ok cool add the option for another card to be added if needed, i need it to go 3 in each line horizontally, ok I want a display section for my collections, I want there to be cards for each collection all of them should be on the page, ok good i like this let me pick the images, also lets make it so there is a description below collection name, ok good please have the images contain not fill, there should be white space around the image for the areas it does not cover, ok cool add the option for another card to be added if needed, ok great please make sure that all of this section is centered on the page, please give me the option to move the entire section left and right as much as i want, please make all the collection cards the same size, just have the cards clickable, also make the background behind the image white
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collections-section-{{ ai_gen_id }} {
+    width: 100%;
+    padding: {{ block.settings.section_padding }}px 20px;
+    display: flex;
+    justify-content: center;
+    transform: translateX({{ block.settings.section_offset }}px);
+    transition: transform 0.3s ease;
+  }
+
+  .ai-collections-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .ai-collections-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+    justify-items: center;
+    align-items: start;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: {{ block.settings.card_width }}px;
+    height: {{ block.settings.card_height }}px;
+    background-color: {{ block.settings.card_background_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ai-collection-image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    height: {{ block.settings.image_height }}px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: {{ block.settings.image_padding }}px;
+    box-sizing: border-box;
+  }
+
+  .ai-collection-image-{{ ai_gen_id }} {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-collection-card-{{ ai_gen_id }}:hover .ai-collection-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-collection-placeholder-{{ ai_gen_id }} {
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-collection-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-collection-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.card_padding }}px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .ai-collection-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+
+  .ai-collection-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_font_size }}px;
+    color: {{ block.settings.description_color }};
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .ai-empty-state-{{ ai_gen_id }} {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+  }
+
+  .ai-empty-state-message-{{ ai_gen_id }} {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .ai-empty-state-hint-{{ ai_gen_id }} {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  @media screen and (max-width: 990px) {
+    .ai-collections-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 549px) {
+    .ai-collections-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: {{ block.settings.grid_gap | times: 0.75 }}px;
+    }
+    
+    .ai-collections-section-{{ ai_gen_id }} {
+      transform: translateX({{ block.settings.section_offset | times: 0.5 }}px);
+    }
+  }
+{% endstyle %}
+
+<div class="ai-collections-section-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-collections-container-{{ ai_gen_id }}">
+    <div class="ai-collections-grid-{{ ai_gen_id }}">
+      {% for i in (1..12) %}
+        {% assign collection_key = 'collection_' | append: i %}
+        {% assign image_key = 'collection_' | append: i | append: '_image' %}
+        {% assign collection = block.settings[collection_key] %}
+        {% assign custom_image = block.settings[image_key] %}
+        {% if collection != blank %}
+          <a href="{{ collection.url }}" class="ai-collection-card-{{ ai_gen_id }}">
+            <div class="ai-collection-image-wrapper-{{ ai_gen_id }}">
+              {% if custom_image %}
+                <img
+                  src="{{ custom_image | image_url: width: 400 }}"
+                  alt="{{ custom_image.alt | escape }}"
+                  class="ai-collection-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="400"
+                  height="{{ block.settings.image_height }}"
+                >
+              {% elsif collection.featured_image %}
+                <img
+                  src="{{ collection.featured_image | image_url: width: 400 }}"
+                  alt="{{ collection.featured_image.alt | escape }}"
+                  class="ai-collection-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="400"
+                  height="{{ block.settings.image_height }}"
+                >
+              {% else %}
+                <div class="ai-collection-placeholder-{{ ai_gen_id }}">
+                  {{ 'collection-1' | placeholder_svg_tag }}
+                </div>
+              {% endif %}
+            </div>
+            
+            <div class="ai-collection-content-{{ ai_gen_id }}">
+              <h3 class="ai-collection-title-{{ ai_gen_id }}">{{ collection.title }}</h3>
+              {% if collection.description != blank and block.settings.show_description %}
+                <p class="ai-collection-description-{{ ai_gen_id }}">
+                  {{ collection.description | truncate: 120 }}
+                </p>
+              {% endif %}
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+      
+      {% unless block.settings.collection_1 or block.settings.collection_2 or block.settings.collection_3 or block.settings.collection_4 or block.settings.collection_5 or block.settings.collection_6 or block.settings.collection_7 or block.settings.collection_8 or block.settings.collection_9 or block.settings.collection_10 or block.settings.collection_11 or block.settings.collection_12 %}
+        <div class="ai-empty-state-{{ ai_gen_id }}">
+          <div class="ai-empty-state-message-{{ ai_gen_id }}">No collections selected</div>
+          <div class="ai-empty-state-hint-{{ ai_gen_id }}">Choose collections to display in the theme editor</div>
+        </div>
+      {% endunless %}
+    </div>
+  </div>
+</div>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Collection display cards",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section positioning"
+    },
+    {
+      "type": "range",
+      "id": "section_offset",
+      "min": -200,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Section horizontal offset",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Section padding",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_1_image",
+      "label": "Custom image for collection 1"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_2_image",
+      "label": "Custom image for collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_3_image",
+      "label": "Custom image for collection 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_4_image",
+      "label": "Custom image for collection 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_5_image",
+      "label": "Custom image for collection 5"
+    },
+    {
+      "type": "collection",
+      "id": "collection_6",
+      "label": "Collection 6"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_6_image",
+      "label": "Custom image for collection 6"
+    },
+    {
+      "type": "collection",
+      "id": "collection_7",
+      "label": "Collection 7"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_7_image",
+      "label": "Custom image for collection 7"
+    },
+    {
+      "type": "collection",
+      "id": "collection_8",
+      "label": "Collection 8"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_8_image",
+      "label": "Custom image for collection 8"
+    },
+    {
+      "type": "collection",
+      "id": "collection_9",
+      "label": "Collection 9"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_9_image",
+      "label": "Custom image for collection 9"
+    },
+    {
+      "type": "collection",
+      "id": "collection_10",
+      "label": "Collection 10"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_10_image",
+      "label": "Custom image for collection 10"
+    },
+    {
+      "type": "collection",
+      "id": "collection_11",
+      "label": "Collection 11"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_11_image",
+      "label": "Custom image for collection 11"
+    },
+    {
+      "type": "collection",
+      "id": "collection_12",
+      "label": "Collection 12"
+    },
+    {
+      "type": "image_picker",
+      "id": "collection_12_image",
+      "label": "Custom image for collection 12"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Card layout"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "Card width",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 300,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Card height",
+      "default": 450
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Card padding",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Image settings"
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 150,
+      "max": 350,
+      "step": 10,
+      "unit": "px",
+      "label": "Image area height",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "image_padding",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "label": "Image padding",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 14,
+      "max": 28,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "description_font_size",
+      "min": 12,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection display cards"
+    }
+  ]
+}
 {% endschema %}
